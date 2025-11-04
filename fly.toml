@@ -1,0 +1,45 @@
+app = "wpp-server-gui"
+primary_region = "gru"
+
+[build]
+  # Usaremos seu Dockerfile
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  CHROME_PATH = "/usr/bin/chromium"
+  SESSION_DIR = "/app/.wppconnect"
+  SESSION_NAME = "next-wpp-session"
+  NODE_ENV = "production"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "5s"
+    interval = "15s"
+    timeout = "2s"
+
+  [[services.http_checks]]
+    interval = "15s"
+    grace_period = "10s"
+    method = "get"
+    path = "/health"
+    protocol = "http"
+    timeout = "2s"
+    tls_skip_verify = false
+
+[mounts]
+  source = "wpp_data"
+  destination = "/app/.wppconnect"
