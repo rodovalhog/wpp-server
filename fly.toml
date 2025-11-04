@@ -8,6 +8,7 @@ primary_region = "gru"
 [env]
   PORT = "8080"
   CHROME_PATH = "/usr/bin/chromium"
+  PUPPETEER_EXECUTABLE_PATH = "/usr/bin/chromium"
   SESSION_DIR = "/app/.wppconnect"
   SESSION_NAME = "next-wpp-session"
   NODE_ENV = "production"
